@@ -6,15 +6,14 @@ public class PlayerController implements KeyListener {
     private GalagaPanel galagaPanel;
 
     public PlayerController (GalagaPanel galagaPanel) {
+
         this.galagaPanel = galagaPanel;
     }
 
     public void keyTyped(KeyEvent keyEvent) {
-
     }
 
     public void keyReleased(KeyEvent keyEvent) {
-
     }
 
     public void keyPressed(KeyEvent keyEvent) {
@@ -32,7 +31,6 @@ public class PlayerController implements KeyListener {
             case KeyEvent.VK_DOWN:
                 this.galagaPanel.getPlayer().moveDown();
                 break;
-
         }
     }
 }

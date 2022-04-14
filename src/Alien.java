@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Ship {
+public class Alien {
+
     private int x;
     private int y;
     private int hight;
@@ -9,15 +10,19 @@ public class Ship {
     private ImageIcon picture;
     private boolean alive;
 
-    public Ship(ImageIcon picture) {
-        this.x=x;
-        this.y=y;
+    public Alien(ImageIcon picture) {
+        this.x = 10;
+        this.y = 10;
         this.picture = picture;
         this.hight=picture.getIconHeight();
         this.wight=picture.getIconWidth();
-        this.alive=true;
     }
+    public void paint(Graphics graphics){
+        if (this.alive){
+            graphics.fillRect(this.x,this.y,this.wight,this.hight);
 
+        }
+    }
     public int getHight() {
         return hight;
     }
@@ -65,33 +70,5 @@ public class Ship {
     public void setY(int y) {
         this.y = y;
     }
-
-    public void moveRight () {
-        this.x++;
-    }
-
-    public void moveLeft () {
-        this.x--;
-    }
-
-    public void moveUp () {
-    this.y --;
-    }
-
-    public void moveDown () {
-        this.y++;
-    }
-    public boolean checkCollision (Alien obstacle) {
-        boolean collision = false;
-        Rectangle r = new Rectangle(obstacle.getX(),obstacle.getY(),obstacle.getWight(),obstacle.getHight());
-        Rectangle p = new Rectangle(this.getX(),this.getY(),this.wight,this.hight);
-        if (p.intersects(r)) {
-            collision = true;
-        }
-        return collision;
-    }
-
-
-
 
 }
