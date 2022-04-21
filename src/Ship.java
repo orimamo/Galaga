@@ -4,6 +4,7 @@ import java.awt.*;
 public class Ship {
     private int x;
     private int y;
+
     private int hight;
     private int wight;
     private ImageIcon picture;
@@ -90,6 +91,11 @@ public class Ship {
         }
         return collision;
     }
+    public void kill(){
+        this.alive=false;
+    }
+
+
 
 
 

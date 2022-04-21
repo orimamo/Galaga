@@ -10,12 +10,13 @@ public class Alien {
     private ImageIcon picture;
     private boolean alive;
 
-    public Alien(ImageIcon picture) {
-        this.x = 10;
-        this.y = 10;
+    public Alien(ImageIcon picture,int x,int y) {
+        this.x = x;
+        this.y = y;
         this.picture = picture;
         this.hight=picture.getIconHeight();
         this.wight=picture.getIconWidth();
+        this.alive=true;
     }
     public void paint(Graphics graphics){
         if (this.alive){
@@ -69,6 +70,18 @@ public class Alien {
 
     public void setY(int y) {
         this.y = y;
+    }
+    public void moveUp(){
+        this.setX(x--);
+    }
+    public void moveDown(){
+    this.setX(x++);
+    }
+    public void moveRight(){
+        this.setY(y++);
+    }
+    public void moveLeft(){
+        this.setY(y--);
     }
 
 }
