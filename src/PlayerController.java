@@ -3,14 +3,14 @@ import java.awt.event.KeyListener;
 
 public class PlayerController implements KeyListener {
 
-    private GalagaPanel galagaPanel;
+    private Ship ship;
 
-    public PlayerController (GalagaPanel galagaPanel) {
-
-        this.galagaPanel = galagaPanel;
+    public PlayerController (Ship ship) {
+        this.ship = ship;
     }
 
     public void keyTyped(KeyEvent keyEvent) {
+
     }
 
     public void keyReleased(KeyEvent keyEvent) {
@@ -18,19 +18,22 @@ public class PlayerController implements KeyListener {
 
     public void keyPressed(KeyEvent keyEvent) {
         int keyCode = keyEvent.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.VK_RIGHT:
-                this.galagaPanel.getPlayer().moveRight();
-                break;
-            case KeyEvent.VK_LEFT:
-                this.galagaPanel.getPlayer().moveLeft();
-                break;
-            case KeyEvent.VK_UP:
-                this.galagaPanel.getPlayer().moveUp();
-                break;
-            case KeyEvent.VK_DOWN:
-                this.galagaPanel.getPlayer().moveDown();
-                break;
+        if(keyCode==keyEvent.VK_RIGHT)
+        {
+            ship.moveRight();
         }
+        if(keyCode==keyEvent.VK_LEFT)
+        {
+            ship.moveLeft();
+        }
+        if(keyCode==keyEvent.VK_UP)
+        {
+            ship.moveUp();
+        }
+        if(keyCode==keyEvent.VK_DOWN)
+        {
+            ship.moveDown();
+        }
+
     }
 }

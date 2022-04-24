@@ -5,39 +5,42 @@ public class Alien {
 
     private int x;
     private int y;
-    private int hight;
-    private int wight;
+    private int height;
+    private int width;
     private ImageIcon picture;
     private boolean alive;
+    private char direction;
 
-    public Alien(ImageIcon picture,int x,int y) {
+    public Alien(ImageIcon picture,int x,int y, char RIGHT) {
         this.x = x;
         this.y = y;
         this.picture = picture;
-        this.hight=picture.getIconHeight();
-        this.wight=picture.getIconWidth();
+        this.height=picture.getIconHeight();
+        this.width=picture.getIconWidth();
         this.alive=true;
+        this.direction = RIGHT;
     }
     public void paint(Graphics graphics){
         if (this.alive){
-            graphics.fillRect(this.x,this.y,this.wight,this.hight);
+            graphics.fillRect(this.x,this.y,this.width,this.height);
 
         }
     }
-    public int getHight() {
-        return hight;
+
+    public int getHeight() {
+        return height;
     }
 
-    public void setHight(int hight) {
-        this.hight = hight;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public int getWight() {
-        return wight;
+    public int getWidth() {
+        return width;
     }
 
-    public void setWight(int wight) {
-        this.wight = wight;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
     public boolean isAlive() {
@@ -71,17 +74,12 @@ public class Alien {
     public void setY(int y) {
         this.y = y;
     }
-    public void moveUp(){
-        this.setX(x--);
-    }
-    public void moveDown(){
-    this.setX(x++);
-    }
-    public void moveRight(){
-        this.setY(y++);
-    }
-    public void moveLeft(){
-        this.setY(y--);
+
+    public char getDirection() {
+        return direction;
     }
 
+    public void setDirection(char direction) {
+        this.direction = direction;
+    }
 }

@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Ship {
     private int x;
@@ -10,13 +11,20 @@ public class Ship {
     private ImageIcon picture;
     private boolean alive;
 
-    public Ship(ImageIcon picture) {
-        this.x=x;
-        this.y=y;
+    public Ship(ImageIcon picture,int x,int y) {
+        this.x = x;
+        this.y = y;
         this.picture = picture;
-        this.hight=picture.getIconHeight();
-        this.wight=picture.getIconWidth();
-        this.alive=true;
+        this.hight = picture.getIconHeight();
+        this.wight = picture.getIconWidth();
+        this.alive = true;
+    }
+
+    public void paint(Graphics graphics) {
+        if (this.alive) {
+            graphics.fillRect(this.x, this.y, this.wight, this.hight);
+
+        }
     }
 
     public int getHight() {
@@ -67,37 +75,23 @@ public class Ship {
         this.y = y;
     }
 
-    public void moveRight () {
+    public void moveRight() {
         this.x++;
     }
 
-    public void moveLeft () {
+    public void moveLeft() {
         this.x--;
     }
 
-    public void moveUp () {
-    this.y --;
+    public void moveUp() {
+        this.y--;
     }
 
-    public void moveDown () {
+    public void moveDown() {
         this.y++;
     }
-    public boolean checkCollision (Alien obstacle) {
-        boolean collision = false;
-        Rectangle r = new Rectangle(obstacle.getX(),obstacle.getY(),obstacle.getWight(),obstacle.getHight());
-        Rectangle p = new Rectangle(this.getX(),this.getY(),this.wight,this.hight);
-        if (p.intersects(r)) {
-            collision = true;
-        }
-        return collision;
+
+    public void kill() {
+        this.alive = false;
     }
-    public void kill(){
-        this.alive=false;
-    }
-
-
-
-
-
-
 }
