@@ -16,16 +16,17 @@ public class GalagaPanel extends JPanel {
     private Ship spaceShip;
     private Alien enemy;
     private ArrayList<Alien> enemies;
+    private Bullet bullet;
 
     public GalagaPanel(int x, int y, int width, int height) {
         this.setBounds(x, y, width, height);
-
+        this.setDoubleBuffered(true);
         this.space = new ImageIcon("sky.jpeg");
         this.ship = new ImageIcon("ship.png");
         this.alien = new ImageIcon("alien.png");
         this.spaceShip = new Ship(ship,350,700);
         this.enemies = new ArrayList<Alien>();
-        for (int i = 0; i < 90; i++) {
+        for (int i = 0; i < 18; i++) {
             if (i != 0) {
                 if (i % 9 == 0) {
                     ENEMYX = 60;
@@ -37,20 +38,26 @@ public class GalagaPanel extends JPanel {
             Alien temp = new Alien(alien, ENEMYX, ENEMYY, RIGHT);
             this.enemies.add(temp);
         }
+        this.bullet=new Bullet(200,200);
         this.mainGameLoop();
     }
 
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         this.space.paintIcon(this, graphics, 0, 0);
+        this.bullet.paint(graphics);
         for (Alien alien : this.enemies) {
             this.alien.paintIcon(this, graphics, alien.getX(), alien.getY());
         }
         this.spaceShip.getPicture().paintIcon(this, graphics, spaceShip.getX(),spaceShip.getY());
+
+
     }
 
     public void mainGameLoop() {
         new Thread(() -> {
+            this.setFocusable(true);
+            this.requestFocus();
             while (true) {
                 PlayerController playerController = new PlayerController(this.spaceShip);
                 this.addKeyListener(playerController);
@@ -77,17 +84,23 @@ public class GalagaPanel extends JPanel {
                 repaint();
             }
         }).start();
-
         new Thread(() -> {
             this.setFocusable(true);
             this.requestFocus();
-            while(true){
-                //left arrow is pressed
-            }
-            //detect arrow key(up,down,left,right)
-            //with loop
+            while (true) {
+                PlayerController playerController = new PlayerController(this.spaceShip);
+                this.addKeyListener(playerController);
 
+
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                repaint();
+            }
         }).start();
+
     }
 
     public Ship getPlayer() {

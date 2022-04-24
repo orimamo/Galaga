@@ -74,6 +74,13 @@ public class Ship {
     public void setY(int y) {
         this.y = y;
     }
+    public void shot( boolean shot){
+        if(shot) {
+            Bullet bullet = new Bullet(this.getX(), this.getY()+this.hight);
+            bullet.moveUp();
+        }
+
+    }
 
     public void moveRight() {
         this.x++;

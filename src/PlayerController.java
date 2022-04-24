@@ -34,6 +34,10 @@ public class PlayerController implements KeyListener {
         {
             ship.moveDown();
         }
+        if (keyCode==keyEvent.VK_SPACE){
+            boolean shot=true;
+            ship.shot(shot);
+        }
 
     }
 }
