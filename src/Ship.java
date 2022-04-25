@@ -3,44 +3,41 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Ship {
-    private int x;
-    private int y;
+    private int x=350;
+    private int y = 700;
 
-    private int hight;
-    private int wight;
+    private int height;
+    private int width;
     private ImageIcon picture;
     private boolean alive;
 
-    public Ship(ImageIcon picture,int x,int y) {
-        this.x = x;
-        this.y = y;
+    public Ship(ImageIcon picture) {
         this.picture = picture;
-        this.hight = picture.getIconHeight();
-        this.wight = picture.getIconWidth();
+        this.height = picture.getIconHeight();
+        this.width = picture.getIconWidth();
         this.alive = true;
     }
 
     public void paint(Graphics graphics) {
         if (this.alive) {
-            graphics.fillRect(this.x, this.y, this.wight, this.hight);
+            graphics.fillRect(this.x, this.y, this.width, this.height);
 
         }
     }
-
-    public int getHight() {
-        return hight;
+    public int getHeight() {
+        return height;
     }
 
-    public void setHight(int hight) {
-        this.hight = hight;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public int getWight() {
-        return wight;
+    public int getWidth() {
+        return width;
     }
 
-    public void setWight(int wight) {
-        this.wight = wight;
+    public void setWidth(int wight) {
+        this.width = wight;
     }
 
     public boolean isAlive() {
@@ -74,10 +71,10 @@ public class Ship {
     public void setY(int y) {
         this.y = y;
     }
-    public Bullet shot(){
-            Bullet bullet = new Bullet(this.getX(), this.getY()+this.hight);
-            return bullet;
-    }
+//    public Bullet shot(){
+//            Bullet bullet = new Bullet(this.getX()+(this.getWidth()/2), this.getY()+(this.getHeight()/2));
+//            return bullet;
+//    }
 
     public void moveRight() {
         this.x++;
@@ -98,4 +95,5 @@ public class Ship {
     public void kill() {
         this.alive = false;
     }
+
 }

@@ -34,7 +34,8 @@ public class CustomRectangle {
     }
 
     public void moveUp () {
-        this.y--;
+            this.y = y - 20;
+
     }
 
     public void moveDown () {

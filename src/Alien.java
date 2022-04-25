@@ -85,4 +85,5 @@ public class Alien {
     public void shot(){
         Bullet bullet =new Bullet(this.getX(),this.getY());
     }
+
 }

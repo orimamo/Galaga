@@ -36,7 +36,7 @@ public class GalagaPanel extends JPanel {
         this.space = new ImageIcon("sky.jpeg");
         this.ship = new ImageIcon("ship.png");
         this.alien = new ImageIcon("alien.png");
-        this.spaceShip = new Ship(ship,350,700);
+        this.spaceShip = new Ship(ship);
         this.enemies = new ArrayList<Alien>();
         for (int i = 0; i < NUM_OF_ALIEN; i++) {
             if (i != 0) {
@@ -50,7 +50,9 @@ public class GalagaPanel extends JPanel {
             Alien temp = new Alien(alien, ENEMYX, ENEMYY, RIGHT);
             this.enemies.add(temp);
         }
-        this.bullet=spaceShip.shot();
+        this.bullets=new ArrayList<Bullet>();
+        this.bullet=new Bullet(spaceShip.getX()+(spaceShip.getWidth()/2),spaceShip.getY()) ;
+        this.bullets.add(this.bullet);
         this.mainGameLoop();
     }
 
@@ -61,8 +63,9 @@ public class GalagaPanel extends JPanel {
             this.alien.paintIcon(this, graphics, alien.getX(), alien.getY());
         }
         this.spaceShip.getPicture().paintIcon(this, graphics, spaceShip.getX(),spaceShip.getY());
-        this.bullet.paint(graphics);
-
+        if (isShoting) {
+            this.bullet.paint(graphics);
+        }
 
 
     }
@@ -99,20 +102,28 @@ public class GalagaPanel extends JPanel {
         new Thread(() -> {
             this.setFocusable(true);
             this.requestFocus();
-            while (true) {
+//            while (this.bullet.getY() > 0) {
+            while (true){
                 PlayerController playerController = new PlayerController(this);
                 this.addKeyListener(playerController);
-                if (isShoting)
-                {
-                    this.bullet.moveUp();
-                    isShoting=false;
+                if (isShoting){
+                    for (Bullet b:this.bullets) {
+                        b.moveUp();
+                    }
                 }
+
+                if (this.bullet.getY() == 0){
+                    isShoting=false;
+                    addBullets();
+
+                }
+
+                repaint();
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                repaint();
             }
         }).start();
 
@@ -135,6 +146,10 @@ public class GalagaPanel extends JPanel {
 
     public void setBullet(Bullet bullet) {
         this.bullet = bullet;
+    }
+    public void addBullets(){
+        this.bullet=new Bullet(spaceShip.getX()+(spaceShip.getWidth()/2),spaceShip.getY()) ;
+        this.bullets.add(this.bullet);
     }
 
 
