@@ -1,10 +1,11 @@
 import java.awt.*;
 
 public class Bullet {
-    private int bulletWidth=20;
-    private int bulletHeight=20;
+    private int bulletWidth=5;
+    private int bulletHeight=10;
     private CustomRectangle bullet;
     private boolean hit;
+    private boolean shot;
 
     public Bullet(int x, int y) {
         this.bullet = new CustomRectangle(
@@ -14,25 +15,32 @@ public class Bullet {
                 bulletHeight,
                 Color.white);
         this.hit=false;
+        this.shot=false;
 
     }
 
     public void paint (Graphics graphics) {
-        if (this.hit) {
             this.bullet.paint(graphics);
 
-        }
     }
 
+    public boolean isShot() {
+        return shot;
+    }
+
+    public void setShot(boolean shot) {
+        this.shot = shot;
+    }
 
     public void moveUp () {
-        while (hit){
+        while (!hit){
+
             this.bullet.moveUp();
         }
     }
 
     public void moveDown(){
-        while (hit){
+        while (!hit){
             this.bullet.moveDown();
         }
     }

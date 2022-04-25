@@ -11,12 +11,24 @@ public class GalagaPanel extends JPanel {
     public int ENEMYY = 10;
     public static final char RIGHT = 'R';
     public static final char LEFT = 'L';
+    public static final int NUM_OF_ALIEN =18;
+    public static final int AMOUNT_OF_ALIEN_IN_LINE =9;
     public static final int MOVE_OFFSET = 10;
     private ImageIcon space, ship, alien;
     private Ship spaceShip;
     private Alien enemy;
     private ArrayList<Alien> enemies;
     private Bullet bullet;
+    private ArrayList<Bullet> bullets;
+    private boolean isShoting=false;
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public void setBullets(ArrayList<Bullet> bullets) {
+        this.bullets = bullets;
+    }
 
     public GalagaPanel(int x, int y, int width, int height) {
         this.setBounds(x, y, width, height);
@@ -26,9 +38,9 @@ public class GalagaPanel extends JPanel {
         this.alien = new ImageIcon("alien.png");
         this.spaceShip = new Ship(ship,350,700);
         this.enemies = new ArrayList<Alien>();
-        for (int i = 0; i < 18; i++) {
+        for (int i = 0; i < NUM_OF_ALIEN; i++) {
             if (i != 0) {
-                if (i % 9 == 0) {
+                if (i % AMOUNT_OF_ALIEN_IN_LINE == 0) {
                     ENEMYX = 60;
                     ENEMYY += 50;// new row
                 } else {
@@ -38,29 +50,29 @@ public class GalagaPanel extends JPanel {
             Alien temp = new Alien(alien, ENEMYX, ENEMYY, RIGHT);
             this.enemies.add(temp);
         }
-        this.bullet=new Bullet(200,200);
+        this.bullet=spaceShip.shot();
         this.mainGameLoop();
     }
 
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         this.space.paintIcon(this, graphics, 0, 0);
-        this.bullet.paint(graphics);
         for (Alien alien : this.enemies) {
             this.alien.paintIcon(this, graphics, alien.getX(), alien.getY());
         }
         this.spaceShip.getPicture().paintIcon(this, graphics, spaceShip.getX(),spaceShip.getY());
+        this.bullet.paint(graphics);
+
 
 
     }
 
     public void mainGameLoop() {
         new Thread(() -> {
+            Random random=new Random();
             this.setFocusable(true);
             this.requestFocus();
             while (true) {
-                PlayerController playerController = new PlayerController(this.spaceShip);
-                this.addKeyListener(playerController);
                 for (int i = 0; i < this.enemies.size(); i++) {
                     Alien currentAlien = this.enemies.get(i);
                     if (currentAlien.getDirection() == RIGHT) {
@@ -74,8 +86,8 @@ public class GalagaPanel extends JPanel {
                             currentAlien.setDirection(RIGHT);
                         }
                     }
-
                 }
+
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -88,12 +100,15 @@ public class GalagaPanel extends JPanel {
             this.setFocusable(true);
             this.requestFocus();
             while (true) {
-                PlayerController playerController = new PlayerController(this.spaceShip);
+                PlayerController playerController = new PlayerController(this);
                 this.addKeyListener(playerController);
-
-
+                if (isShoting)
+                {
+                    this.bullet.moveUp();
+                    isShoting=false;
+                }
                 try {
-                    Thread.sleep(300);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -105,6 +120,21 @@ public class GalagaPanel extends JPanel {
 
     public Ship getPlayer() {
         return spaceShip;
+    }
+    public boolean isShoting() {
+        return isShoting;
+    }
+
+    public void setShoting(boolean shoting) {
+        isShoting = shoting;
+    }
+
+    public Bullet getBullet() {
+        return bullet;
+    }
+
+    public void setBullet(Bullet bullet) {
+        this.bullet = bullet;
     }
 
 

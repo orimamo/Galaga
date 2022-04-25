@@ -1,12 +1,13 @@
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class PlayerController implements KeyListener {
 
-    private Ship ship;
+    private GalagaPanel galagaPanel;
 
-    public PlayerController (Ship ship) {
-        this.ship = ship;
+    public PlayerController (GalagaPanel galagaPanel) {
+        this.galagaPanel =galagaPanel ;
     }
 
     public void keyTyped(KeyEvent keyEvent) {
@@ -18,26 +19,25 @@ public class PlayerController implements KeyListener {
 
     public void keyPressed(KeyEvent keyEvent) {
         int keyCode = keyEvent.getKeyCode();
-        if(keyCode==keyEvent.VK_RIGHT)
-        {
-            ship.moveRight();
+        if (keyCode == keyEvent.VK_RIGHT) {
+            galagaPanel.getPlayer().moveRight();
         }
-        if(keyCode==keyEvent.VK_LEFT)
-        {
-            ship.moveLeft();
+        if (keyCode == keyEvent.VK_LEFT) {
+            galagaPanel.getPlayer().moveLeft();
         }
-        if(keyCode==keyEvent.VK_UP)
-        {
-            ship.moveUp();
+        if (keyCode == keyEvent.VK_UP) {
+            galagaPanel.getPlayer().moveUp();
         }
-        if(keyCode==keyEvent.VK_DOWN)
-        {
-            ship.moveDown();
+        if (keyCode == keyEvent.VK_DOWN) {
+            galagaPanel.getPlayer().moveDown();
         }
-        if (keyCode==keyEvent.VK_SPACE){
-            boolean shot=true;
-            ship.shot(shot);
-        }
+        if (keyCode == keyEvent.VK_SPACE) {
 
+            if (!galagaPanel.isShoting()) {
+                galagaPanel.setShoting(true);
+                System.out.println("done");
+            }
+
+        }
     }
 }

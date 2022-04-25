@@ -82,4 +82,7 @@ public class Alien {
     public void setDirection(char direction) {
         this.direction = direction;
     }
+    public void shot(){
+        Bullet bullet =new Bullet(this.getX(),this.getY());
+    }
 }
