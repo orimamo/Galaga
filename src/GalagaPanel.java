@@ -36,7 +36,9 @@ public class GalagaPanel extends JPanel {
         this.space = new ImageIcon("sky.jpeg");
         this.ship = new ImageIcon("ship.png");
         this.alien = new ImageIcon("alien.png");
-        this.spaceShip = new Ship(ship);
+        this.bullets=new ArrayList<Bullet>();
+        this.spaceShip = new Ship(350,700,ship,this.bullets);
+
         this.enemies = new ArrayList<Alien>();
         for (int i = 0; i < NUM_OF_ALIEN; i++) {
             if (i != 0) {
@@ -50,7 +52,6 @@ public class GalagaPanel extends JPanel {
             Alien temp = new Alien(alien, ENEMYX, ENEMYY, RIGHT);
             this.enemies.add(temp);
         }
-        this.bullets=new ArrayList<Bullet>();
         this.bullet=spaceShip.createBullet();
         this.bullets.add(this.bullet);
         this.mainGameLoop();
@@ -85,11 +86,13 @@ public class GalagaPanel extends JPanel {
                         currentAlien.setX(currentAlien.getX() - MOVE_OFFSET);
                         if (currentAlien.getX() <= 0) {
                             currentAlien.setDirection(LEFT);
+                            currentAlien.moveDown();
                         }
                     }else{
                         currentAlien.setX(currentAlien.getX() + MOVE_OFFSET);
                         if (currentAlien.getX() >= 760) {
                             currentAlien.setDirection(RIGHT);
+                            currentAlien.moveDown();
                         }
                     }
                 }
@@ -108,30 +111,25 @@ public class GalagaPanel extends JPanel {
 //            while (this.bullet.getY() > 0) {
             PlayerController playerController = new PlayerController(this);
             this.addKeyListener(playerController);
-            while (true){
+            while (this.bullet.getY() > 0){
                         if (shot) {
+//                            this.bullet.getBullet();
                             this.bullet.moveUp();
-//                            if (this.bullet.getY() == 0) {
-//                                isShoting = false;
-//                                shot = false;
-//                                spaceShip.createBullet();
-//
-//                            }
+                            for (Alien alien1:this.enemies)
+                            {
+                                if (this.bullet.kill(alien1)){
+                                    alien1.setAlive(false);
+                                    System.out.println("COLLISION!");
+                                    break;
+                                }
+                            }
+                            if (this.bullet.getY() == 0) {
+                                isShoting = false;
+                                shot = false;
+                                spaceShip.createBullet();
+
+                            }
                         }
-
-                for (Alien alien1:this.enemies)
-                {
-                    if (this.bullet.checkCollision(alien1)){
-                        alien1.setAlive(false);
-                        System.out.println("COLLISION!");
-                    }
-                }
-
-
-
-
-
-
 //                if (this.bullet.getY() == 0 || spaceShip.getBullets().size()==0){
 //                    isShoting=false;
 //                    spaceShip.addBullets();

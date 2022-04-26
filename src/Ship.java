@@ -4,21 +4,23 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Ship {
-    private int x=350;
-    private int y = 700;
+    private int x;
+    private int y;
 
     private int height;
     private int width;
     private ImageIcon picture;
     private boolean alive;
-//     public ArrayList<Bullet> bullets;
+     private ArrayList<Bullet> bullets;
 
-    public Ship(ImageIcon picture) {
+    public Ship(int x,int y,ImageIcon picture,ArrayList<Bullet> bullets) {
+        this.x=x;
+        this.y=y;
         this.picture = picture;
         this.height = picture.getIconHeight();
         this.width = picture.getIconWidth();
         this.alive = true;
-//        this.bullets=new ArrayList<Bullet>();
+        this.bullets=bullets;
 
     }
 
@@ -101,8 +103,8 @@ public class Ship {
     }
 
     public Bullet createBullet(){
-        Bullet bullet=new Bullet(this.getX()+(this.getWidth()/2),this.getY()) ;
-//        this.bullets.add(bullet);
+        Bullet bullet=new Bullet(this.getX()+(this.getWidth()/2),780) ;
+        this.bullets.add(bullet);
         return bullet;
     }
 

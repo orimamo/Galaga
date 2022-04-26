@@ -52,8 +52,9 @@ public class Bullet {
     }
 
     public void paint (Graphics graphics) {
+        if (!hit) {
             this.bullet.paint(graphics);
-
+        }
     }
 
     public boolean isShot() {
@@ -82,11 +83,11 @@ public class Bullet {
 //            this.bullet.moveDown();
 //
 //    }
-    public void kill (Alien enemy) {
+    public boolean kill (Alien enemy) {
         if (checkCollision(enemy)){
             this.hit = true;
-
         }
+        return hit;
     }
     public boolean checkCollision (Alien enemy) {
         boolean collision = false;
