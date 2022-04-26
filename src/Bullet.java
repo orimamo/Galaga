@@ -66,6 +66,9 @@ public class Bullet {
     public int getY(){
         return this.bullet.getY();
     }
+    public int getX(){
+        return this.bullet.getX();
+    }
 
     public void moveUp () {
 

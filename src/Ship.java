@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Ship {
     private int x=350;
@@ -10,12 +11,15 @@ public class Ship {
     private int width;
     private ImageIcon picture;
     private boolean alive;
+//     public ArrayList<Bullet> bullets;
 
     public Ship(ImageIcon picture) {
         this.picture = picture;
         this.height = picture.getIconHeight();
         this.width = picture.getIconWidth();
         this.alive = true;
+//        this.bullets=new ArrayList<Bullet>();
+
     }
 
     public void paint(Graphics graphics) {
@@ -77,23 +81,36 @@ public class Ship {
 //    }
 
     public void moveRight() {
-        this.x++;
+        this.x+=5;
     }
 
     public void moveLeft() {
-        this.x--;
+        this.x-=5;
     }
 
     public void moveUp() {
-        this.y--;
+        this.y-=5;
     }
 
     public void moveDown() {
-        this.y++;
+        this.y+=5;
     }
 
     public void kill() {
         this.alive = false;
     }
 
+    public Bullet createBullet(){
+        Bullet bullet=new Bullet(this.getX()+(this.getWidth()/2),this.getY()) ;
+//        this.bullets.add(bullet);
+        return bullet;
+    }
+
+//    public ArrayList<Bullet> getBullets() {
+//        return bullets;
+//    }
+//
+//    public void setBullets(ArrayList<Bullet> bullets) {
+//        this.bullets = bullets;
+//    }
 }
