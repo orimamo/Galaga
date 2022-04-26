@@ -60,7 +60,10 @@ public class GalagaPanel extends JPanel {
         super.paintComponent(graphics);
         this.space.paintIcon(this, graphics, 0, 0);
         for (Alien alien : this.enemies) {
-            this.alien.paintIcon(this, graphics, alien.getX(), alien.getY());
+            if (alien.isAlive()) {
+                this.alien.paintIcon(this, graphics, alien.getX(), alien.getY());
+
+            }
         }
         this.spaceShip.getPicture().paintIcon(this, graphics, spaceShip.getX(),spaceShip.getY());
         if (isShoting) {
@@ -106,14 +109,28 @@ public class GalagaPanel extends JPanel {
             PlayerController playerController = new PlayerController(this);
             this.addKeyListener(playerController);
             while (true){
-                if (shot) {
-                    this.bullet.moveUp();
-                    if (this.bullet.getY() == 0) {
-                        isShoting = false;
-                        shot = false;
-                        this.bullets.add(spaceShip.createBullet());
+                        if (shot) {
+                            this.bullet.moveUp();
+//                            if (this.bullet.getY() == 0) {
+//                                isShoting = false;
+//                                shot = false;
+//                                spaceShip.createBullet();
+//
+//                            }
+                        }
+
+                for (Alien alien1:this.enemies)
+                {
+                    if (this.bullet.checkCollision(alien1)){
+                        alien1.setAlive(false);
+                        System.out.println("COLLISION!");
                     }
                 }
+
+
+
+
+
 
 //                if (this.bullet.getY() == 0 || spaceShip.getBullets().size()==0){
 //                    isShoting=false;

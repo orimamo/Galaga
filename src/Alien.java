@@ -23,7 +23,6 @@ public class Alien {
     public void paint(Graphics graphics){
         if (this.alive){
             graphics.fillRect(this.x,this.y,this.width,this.height);
-
         }
     }
 

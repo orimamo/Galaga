@@ -113,4 +113,6 @@ public class Ship {
 //    public void setBullets(ArrayList<Bullet> bullets) {
 //        this.bullets = bullets;
 //    }
+
+
 }

@@ -82,32 +82,36 @@ public class Bullet {
 //            this.bullet.moveDown();
 //
 //    }
-    public void kill (CustomRectangle obstacle) {
-        if (checkCollision(obstacle)){
+    public void kill (Alien enemy) {
+        if (checkCollision(enemy)){
             this.hit = true;
 
         }
     }
-    public boolean checkCollision (CustomRectangle obstacle) {
+    public boolean checkCollision (Alien enemy) {
         boolean collision = false;
-        Rectangle bodyRect = new Rectangle(
+        Rectangle bullet = new Rectangle(
                 this.bullet.getX(),
                 this.bullet.getY(),
                 this.bullet.getWidth(),
                 this.bullet.getHeight()
         );
         Rectangle obstacleRect = new Rectangle(
-                obstacle.getX(),
-                obstacle.getY(),
-                obstacle.getWidth(),
-                obstacle.getHeight()
+                enemy.getX(),
+                enemy.getY(),
+                enemy.getWidth(),
+                enemy.getHeight()
+
         );
-        if (bodyRect.intersects(obstacleRect)) {
+        if (bullet.intersects(obstacleRect)) {
             collision = true;
         }
         return collision;
     }
 
+//    public int getY(){
+//        return this.bullet.getY();
+//    }
 
 
 }

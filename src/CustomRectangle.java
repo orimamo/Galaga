@@ -19,7 +19,7 @@ public class CustomRectangle {
         graphics.setColor(this.color);
         graphics.fillRect(
                 this.x,
-                this.y,
+                (int) this.y,
                 this.width,
                 this.height
         );
@@ -82,7 +82,7 @@ public class CustomRectangle {
         this.color = color;
     }
 
-    public int getBottom () {
+    public double getBottom () {
         return this.y + this.height;
     }
 
