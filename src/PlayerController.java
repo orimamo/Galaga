@@ -32,7 +32,6 @@ public class PlayerController implements KeyListener {
             galagaPanel.getPlayer().moveDown();
         }
         if (keyCode == keyEvent.VK_SPACE) {
-            galagaPanel.getPlayer().createBullet();
             if (!galagaPanel.isShoting()) {
                 galagaPanel.setShoting(true);
                 System.out.println("done");

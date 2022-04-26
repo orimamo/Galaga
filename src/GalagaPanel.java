@@ -30,7 +30,6 @@ public class GalagaPanel extends JPanel {
     public void setBullets(ArrayList<Bullet> bullets) {
         this.bullets = bullets;
     }
-
     public GalagaPanel(int x, int y, int width, int height) {
         this.setBounds(x, y, width, height);
         this.setDoubleBuffered(true);
@@ -51,12 +50,9 @@ public class GalagaPanel extends JPanel {
             Alien temp = new Alien(alien, ENEMYX, ENEMYY, RIGHT);
             this.enemies.add(temp);
         }
-//        this.bullets=spaceShip.getBullets();
-        if (isShoting) {
-            this.bullet=spaceShip.createBullet();
-            this.bullets.add(this.bullet);
-            shot=true;
-            }
+        this.bullets=new ArrayList<Bullet>();
+        this.bullet=spaceShip.createBullet();
+        this.bullets.add(this.bullet);
         this.mainGameLoop();
     }
 
@@ -67,9 +63,9 @@ public class GalagaPanel extends JPanel {
             this.alien.paintIcon(this, graphics, alien.getX(), alien.getY());
         }
         this.spaceShip.getPicture().paintIcon(this, graphics, spaceShip.getX(),spaceShip.getY());
-        if (shot) {
+        if (isShoting) {
             this.bullet.paint(graphics);
-//            this.bullet.paint(graphics);
+            shot=true;
         }
 
     }
@@ -110,16 +106,14 @@ public class GalagaPanel extends JPanel {
             PlayerController playerController = new PlayerController(this);
             this.addKeyListener(playerController);
             while (true){
-                        if (shot) {
-                            this.bullet.moveUp();
-//                            if (this.bullet.getY() == 0) {
-//                                isShoting = false;
-//                                shot = false;
-//                                spaceShip.createBullet();
-//
-//                            }
-                        }
-
+                if (shot) {
+                    this.bullet.moveUp();
+                    if (this.bullet.getY() == 0) {
+                        isShoting = false;
+                        shot = false;
+                        this.bullets.add(spaceShip.createBullet());
+                    }
+                }
 
 //                if (this.bullet.getY() == 0 || spaceShip.getBullets().size()==0){
 //                    isShoting=false;
