@@ -19,25 +19,16 @@ public class GalagaPanel extends JPanel {
     private Alien enemy;
     private ArrayList<Alien> enemies;
     private Bullet bullet;
-    private ArrayList<Bullet> bullets;
     private boolean isShoting=false;
     private boolean shot=false;
 
-    public ArrayList<Bullet> getBullets() {
-        return bullets;
-    }
-
-    public void setBullets(ArrayList<Bullet> bullets) {
-        this.bullets = bullets;
-    }
     public GalagaPanel(int x, int y, int width, int height) {
         this.setBounds(x, y, width, height);
         this.setDoubleBuffered(true);
         this.space = new ImageIcon("sky.jpeg");
         this.ship = new ImageIcon("ship.png");
         this.alien = new ImageIcon("alien.png");
-        this.bullets=new ArrayList<Bullet>();
-        this.spaceShip = new Ship(350,700,ship,this.bullets);
+        this.spaceShip = new Ship(350,700,ship);
 
         this.enemies = new ArrayList<Alien>();
         for (int i = 0; i < NUM_OF_ALIEN; i++) {
@@ -52,8 +43,6 @@ public class GalagaPanel extends JPanel {
             Alien temp = new Alien(alien, ENEMYX, ENEMYY, RIGHT);
             this.enemies.add(temp);
         }
-        this.bullet=spaceShip.createBullet();
-        this.bullets.add(this.bullet);
         this.mainGameLoop();
     }
 
@@ -66,8 +55,10 @@ public class GalagaPanel extends JPanel {
 
             }
         }
-        this.spaceShip.getPicture().paintIcon(this, graphics, spaceShip.getX(),spaceShip.getY());
-        if (isShoting) {
+        if(spaceShip.isAlive()) {
+            this.spaceShip.getPicture().paintIcon(this, graphics, spaceShip.getX(), spaceShip.getY());
+        }
+        if (isShoting && !this.bullet.isHit()) {
             this.bullet.paint(graphics);
             shot=true;
         }
@@ -111,37 +102,64 @@ public class GalagaPanel extends JPanel {
 //            while (this.bullet.getY() > 0) {
             PlayerController playerController = new PlayerController(this);
             this.addKeyListener(playerController);
-            while (this.bullet.getY() > 0){
-                        if (shot) {
-//                            this.bullet.getBullet();
-                            this.bullet.moveUp();
-                            for (Alien alien1:this.enemies)
-                            {
-                                if (this.bullet.kill(alien1)){
-                                    alien1.setAlive(false);
-                                    System.out.println("COLLISION!");
-                                    break;
-                                }
-                            }
-                            if (this.bullet.getY() == 0) {
-                                isShoting = false;
-                                shot = false;
-                                spaceShip.createBullet();
 
-                            }
-                        }
-//                if (this.bullet.getY() == 0 || spaceShip.getBullets().size()==0){
-//                    isShoting=false;
-//                    spaceShip.addBullets();
-////                    addBullets();
-//
-//                }
-
-                repaint();
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }
+
+        }).start();
+
+        new Thread(() -> {
+            this.setFocusable(true);
+            this.requestFocus();
+            ArrayList<Bullet> bullets = spaceShip.getBullets();
+            spaceShip.shot();
+            this.bullet=bullets.get(0);
+        while (true) {
+            if (shot) {
+                this.bullet.moveUp();
+                }
+
+                for (Alien alien1 : this.enemies) {
+                    Alien currentAlien = alien1;
+                    if (this.bullet.checkCollision(currentAlien)) {
+                        this.bullet.kill(alien1);
+                        currentAlien.setAlive(false);
+                        System.out.println("COLLISION!");
+                        break;
+                    }if (this.bullet.getY() == 0) {
+                        isShoting = false;
+                        shot = false;
+                        spaceShip.shot();
+
+                    }
+            }
+            repaint();
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        }).start();
+        new Thread(()->{
+            this.setFocusable(true);
+            this.requestFocus();
+            while (spaceShip.isAlive()) {
+                for (Alien alien1 : this.enemies) {
+                    Alien currentAlien = alien1;
+                    if (this.spaceShip.checkCollision(currentAlien)) {
+                        this.spaceShip.setAlive(false);
+                        System.out.println("dead");
+                    }
+
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }).start();

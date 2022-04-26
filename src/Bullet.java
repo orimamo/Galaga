@@ -83,11 +83,10 @@ public class Bullet {
 //            this.bullet.moveDown();
 //
 //    }
-    public boolean kill (Alien enemy) {
+    public void kill (Alien enemy) {
         if (checkCollision(enemy)){
             this.hit = true;
         }
-        return hit;
     }
     public boolean checkCollision (Alien enemy) {
         boolean collision = false;
